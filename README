@@ -1,3 +1,14 @@
+=== MARCOS NOTE:
+
+I modified the following files 
+
+apps/demo/resources/main_page
+frameworks/flot/views/graph.js
+
+To see the graph on the view
+
+===
+
 Flot-SproutCore provides framework for integrating flot into SproutCore applications.
 
 The Flot-SproutCore directory is an example SproutCore application. If you have SproutCore installed and want to see the example, type:
