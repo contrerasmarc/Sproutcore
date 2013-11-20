@@ -17,7 +17,12 @@ Demo.main = function main() {
   // The default code here will make the mainPane for your application visible
   // on screen.  If you app gets any level of complexity, you will probably 
   // create multiple pages and panes.  
-  Demo.getPath('mainPage.mainPane').append() ;
+  
+
+
+  	Demo.getPath('mainPage.mainPane').append() ;
+
+	//Demo.getPath('cleanPage.cleanPane').append() ;
 
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!

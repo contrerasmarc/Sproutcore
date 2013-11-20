@@ -18,9 +18,9 @@ Flot.GraphView = SC.View.extend(
 	series: null,
 	data: null ,
 	options: null ,
-	debugInConsole: false ,
+	debugInConsole: YES , 
 	render: function(context, firstTime) {
-		sc_super();
+
 		if( !this.get('layer') || ! this.get('isVisibleInWindow')) return;
 
 		if((this.get('frame').width <= 0) || (this.get('frame').height <= 0)) return;
@@ -42,6 +42,7 @@ Flot.GraphView = SC.View.extend(
 		} else {
 			if (this.debugInConsole) console.warn('data was empty');
 		}
+		sc_super();
 	},
 	
     plotDataDidChange: function() {
@@ -66,11 +67,24 @@ Flot.GraphView = SC.View.extend(
 		}		
 	}.observes('isVisibleInWindow','isVisible'),
 	
-    layerDidChange: function() {
-		if (this.debugInConsole) console.log('layerchanged');
-		this.setLayerNeedsUpdate() ;	
+	// layerDidChange: function() {
+	// 	if (this.debugInConsole) console.log('layerchanged');
+	// 	this.setLayerNeedsUpdate() ;	
+	// }.observes('layer'),
+
+	// Test: from http://colincodes.tumblr.com/post/512234561/sproutcore-and-flot   NO SUCCESS
+	layerDidChange: function() {
+	    this.set('layerNeedsUpdate', YES);
+		if (this.debugInConsole) console.log('layer-changed');
 	}.observes('layer'),
 	
+	updateLayer: function() {
+	    sc_super();
+	    var layer = this.get('layer');
+	    if (layer) $.plot(layer, this.get('data'));
+	},
+	// End from 
+
     layoutDidChange: function() {
 		sc_super();
 		if (this.debugInConsole) console.log('layout changed');
@@ -85,11 +99,34 @@ Flot.GraphView = SC.View.extend(
 	},
 	
     setLayerNeedsUpdate: function() {
-		this.invokeOnce(function() {
-			this.set('layerNeedsUpdate', YES);
+		//this.invokeLast(function() { // Test: NO SUCCESS :-(
+		this.invokeOnce(function() {  // Original
+			// this.invokeNext(function() {   // Test: NO SUCCESS :-(
+			//this.set('layerNeedsUpdate', YES);
+			if (this.get('isVisibleInWindow') && this.get('isVisible')) this.set('layerNeedsUpdate', YES);
 			if (this.debugInConsole) console.log('need update') ;
+			//Demo.mainPage.graphView.graph.forcePlot();
 		});
 	},
+	
+	
+	// // Test: NO SUCCESS :-(
+	// willShowInDocument: function() {
+	//     this.displayDidChange();
+	//     console.log('>> willSID pass in Graph');
+	// },
+	// // Test: SUCCESS :-)
+	didAppendToDocument: function() {
+	    this.displayDidChange();
+	    console.log('>> didATD pass in Graph');
+	},
+	// // Test: NO SUCCESS :-(
+	// didShowInDocument: function() {
+	//     this.displayDidChange();
+	//     console.log('>> didSID pass in Graph');
+	// },
+		
+	
 	
     viewDidResize: function() {
 		sc_super();
