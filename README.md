@@ -1,11 +1,12 @@
-=== MARCOS NOTE:
+=== MARCOS NOTES:
 
 I modified the following files 
 
-apps/demo/resources/main_page
-frameworks/flot/views/graph.js
+1.- apps/demo/resources/main_page.js
 
-To see the graph on the view
+2.- frameworks/flot/views/graph.js
+
+To see the graph on the View
 
 ===
 
